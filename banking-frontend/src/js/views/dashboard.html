@@ -45,4 +45,16 @@
       style="width:100%; max-width:1000px;">
     </oj-table>
   </div>
+
+  <!-- Account Type Distribution Chart -->
+  <div class="oj-sm-margin-6x-top" style="padding: 24px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h2 class="oj-typography-heading-sm oj-sm-margin-4x-bottom">Account Type Distribution</h2>
+    <oj-chart
+      id="pieChart"
+      type="pie"
+      data="[[pieSeriesValue]]"
+      groups="[[pieGroupsValue]]"
+      style="max-width:500px; height:400px; margin: 0 auto;">
+    </oj-chart>
+  </div>
 </div>

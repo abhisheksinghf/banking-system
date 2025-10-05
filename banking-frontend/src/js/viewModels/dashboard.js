@@ -1,6 +1,6 @@
 define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
         '../services/dashboardService',
-        'ojs/ojtable', 'ojs/ojknockout'],
+        'ojs/ojtable', 'ojs/ojknockout', 'ojs/ojchart'],
  function(accUtils, ko, ArrayDataProvider, dashboardService) {
     function DashboardViewModel() {
       let self = this;
@@ -15,6 +15,11 @@ define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
       self.recentAccounts = ko.observableArray([]);
       self.dataProvider = new ArrayDataProvider(self.recentAccounts, { keyAttributes: 'accountNo' });
       
+      // Pie chart data
+      self.accountTypeData = ko.observableArray([]);
+      self.pieSeriesValue = ko.observableArray([]);
+      self.pieGroupsValue = ko.observableArray([]);
+      
       /**
        * Load all dashboard data
        */
@@ -26,6 +31,19 @@ define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
             self.totalBalance(data.totalBalance);
             self.avgBalance(data.avgBalance);
             self.recentAccounts(data.recentAccounts);
+            
+            // Update pie chart data
+            self.accountTypeData(data.accountTypeData);
+            console.log("Account Type Data:", data.accountTypeData);
+            // Format data for oj-chart
+            const series = [{
+              name: "Account Types",
+              items: data.accountTypeData.map(item => item.value)
+            }];
+            const groups = data.accountTypeData.map(item => item.name);
+            
+            self.pieSeriesValue(series);
+            self.pieGroupsValue(groups);
           })
           .catch(err => {
             console.error("Error loading dashboard data:", err);
@@ -35,6 +53,9 @@ define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
             self.totalBalance("$0.00");
             self.avgBalance("$0.00");
             self.recentAccounts([]);
+            self.accountTypeData([]);
+            self.pieSeriesValue([]);
+            self.pieGroupsValue([]);
           });
       };
       

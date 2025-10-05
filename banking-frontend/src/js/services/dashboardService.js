@@ -33,6 +33,23 @@ define(['./customerService', './accountService'], function (customerService, acc
     return accounts.slice(-5).reverse();
   }
   
+  /**
+   * Calculate account type distribution for pie chart
+   */
+  function getAccountTypeDistribution(accounts) {
+    const distribution = accounts.reduce((acc, account) => {
+      const type = account.accountType || 'Unknown';
+      acc[type] = (acc[type] || 0) + 1;
+      return acc;
+    }, {});
+    
+    // Convert to array format for chart
+    return Object.keys(distribution).map(type => ({
+      name: type,
+      value: distribution[type]
+    }));
+  }
+  
   return {
     /**
      * Fetch dashboard data including customers count and account metrics
@@ -48,13 +65,15 @@ define(['./customerService', './accountService'], function (customerService, acc
         
         const metrics = calculateMetrics(accounts);
         const recentAccounts = getRecentAccounts(accounts);
+        const accountTypeData = getAccountTypeDistribution(accounts);
         
         return {
           totalCustomers: customers.length,
           totalAccounts: metrics.totalAccounts,
           totalBalance: metrics.totalBalance,
           avgBalance: metrics.avgBalance,
-          recentAccounts: recentAccounts
+          recentAccounts: recentAccounts,
+          accountTypeData: accountTypeData
         };
       } catch (error) {
         console.error("Error fetching dashboard data:", error);

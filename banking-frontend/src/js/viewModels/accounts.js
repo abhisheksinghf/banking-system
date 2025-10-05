@@ -41,6 +41,11 @@ define([
     self.editAccountBalance = ko.observable();
     self.editAccountType = ko.observable();
     
+    // Delete confirmation fields
+    self.deleteAccountNo = ko.observable();
+    self.deleteAccountHolderName = ko.observable();
+    self.deleteAccountBalance = ko.observable();
+    
     // Search field
     self.searchAccountNo = ko.observable("");
     
@@ -165,6 +170,40 @@ define([
         .catch(err => {
           console.error("Error updating account:", err);
           alert("Failed to update account. Please try again.");
+        });
+    };
+    
+    // Delete Dialog handling
+    self.confirmDelete = (accountData) => {
+      // Populate confirmation dialog with account data
+      self.deleteAccountNo(accountData.accountNo);
+      self.deleteAccountHolderName(accountData.accountHolderName);
+      self.deleteAccountBalance(accountData.balance);
+      
+      document.getElementById("deleteConfirmDialog").open();
+    };
+    
+    self.closeDeleteDialog = () => {
+      document.getElementById("deleteConfirmDialog").close();
+    };
+    
+    // Delete account via API
+    self.deleteAccount = () => {
+      const accountNo = self.deleteAccountNo();
+      
+      accountService.deleteAccount(accountNo)
+        .then(() => {
+          // Remove account from the array
+          const accounts = self.accounts();
+          const filteredAccounts = accounts.filter(acc => acc.accountNo !== accountNo);
+          self.accounts(filteredAccounts);
+          
+          self.closeDeleteDialog();
+          alert("Account deleted successfully!");
+        })
+        .catch(err => {
+          console.error("Error deleting account:", err);
+          alert("Failed to delete account. Please try again.");
         });
     };
     

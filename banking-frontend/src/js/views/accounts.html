@@ -54,6 +54,11 @@
                    display="icons">
           <span slot="startIcon" class="oj-ux-ico-edit"></span>
         </oj-button>
+        <oj-button on-oj-action="[[confirmDelete.bind($data, cell.row)]]" 
+                   chroming="borderless"
+                   display="icons">
+          <span slot="startIcon" class="oj-ux-ico-trash"></span>
+        </oj-button>
       </template>
     </oj-table>
   </oj-card>
@@ -97,7 +102,7 @@
     <div slot="body" style="padding:16px;">
       <oj-form-layout direction="column" max-columns="1" style="width:100%; max-width:400px;">
         <oj-input-number label-hint="Account No" value="{{editAccountNo}}" readonly="true"></oj-input-number>
-        <oj-input-text readonly="true" label-hint="Account Holder Name" value="{{editAccountHolderName}}"></oj-input-text>
+        <oj-input-text label-hint="Account Holder Name" value="{{editAccountHolderName}}"></oj-input-text>
         <oj-input-number label-hint="Balance" value="{{editAccountBalance}}" min="0"></oj-input-number>
         <!-- Account Type Dropdown -->
         <oj-c-select-single label-hint="Account Type"
