@@ -1,11 +1,11 @@
-define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider', 
-        '../services/customerService', '../services/accountService',
+define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
+        '../services/dashboardService',
         'ojs/ojtable', 'ojs/ojknockout'],
- function(accUtils, ko, ArrayDataProvider, customerService, accountService) {
+ function(accUtils, ko, ArrayDataProvider, dashboardService) {
     function DashboardViewModel() {
       let self = this;
       
-      // KPI counts
+      // KPI observables
       self.totalCustomers = ko.observable(0);
       self.totalAccounts = ko.observable(0);
       self.totalBalance = ko.observable("$0.00");
@@ -15,48 +15,22 @@ define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
       self.recentAccounts = ko.observableArray([]);
       self.dataProvider = new ArrayDataProvider(self.recentAccounts, { keyAttributes: 'accountNo' });
       
-      // Format currency
-      self.formatCurrency = (amount) => {
-        return new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          minimumFractionDigits: 2
-        }).format(amount);
-      };
-      
-      // Load customers count
-      self.loadCustomers = () => {
-        customerService.listCustomers()
-          .then(customers => {
-            self.totalCustomers(customers.length);
+      /**
+       * Load all dashboard data
+       */
+      self.loadDashboardData = () => {
+        dashboardService.getDashboardData()
+          .then(data => {
+            self.totalCustomers(data.totalCustomers);
+            self.totalAccounts(data.totalAccounts);
+            self.totalBalance(data.totalBalance);
+            self.avgBalance(data.avgBalance);
+            self.recentAccounts(data.recentAccounts);
           })
           .catch(err => {
-            console.error("Error loading customers:", err);
+            console.error("Error loading dashboard data:", err);
+            // Reset to default values on error
             self.totalCustomers(0);
-          });
-      };
-      
-      // Load accounts and calculate metrics
-      self.loadAccounts = () => {
-        accountService.listAccounts()
-          .then(accounts => {
-            // Total accounts
-            self.totalAccounts(accounts.length);
-            
-            // Calculate total balance
-            const total = accounts.reduce((sum, acc) => sum + (acc.balance || 0), 0);
-            self.totalBalance(self.formatCurrency(total));
-            
-            // Calculate average balance
-            const avg = accounts.length > 0 ? total / accounts.length : 0;
-            self.avgBalance(self.formatCurrency(avg));
-            
-            // Show recent accounts (last 5)
-            const recentFive = accounts.slice(-5).reverse();
-            self.recentAccounts(recentFive);
-          })
-          .catch(err => {
-            console.error("Error loading accounts:", err);
             self.totalAccounts(0);
             self.totalBalance("$0.00");
             self.avgBalance("$0.00");
@@ -64,22 +38,20 @@ define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
           });
       };
       
-      // Load all dashboard data
-      self.loadDashboardData = () => {
-        self.loadCustomers();
-        self.loadAccounts();
-      };
-      
-      // Lifecycle
+      // Lifecycle hooks
       this.connected = () => {
         accUtils.announce('Dashboard page loaded.', 'assertive');
         document.title = "Dashboard";
         self.loadDashboardData();
       };
       
-      this.disconnected = () => {};
+      this.disconnected = () => {
+        // Cleanup if needed
+      };
       
-      this.transitionCompleted = () => {};
+      this.transitionCompleted = () => {
+        // Post-transition logic if needed
+      };
     }
     
     return DashboardViewModel;
