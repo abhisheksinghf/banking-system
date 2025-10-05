@@ -1,0 +1,48 @@
+<!-- Dashboard Content -->
+<div class="oj-hybrid-padding">
+  <h1>Dashboard</h1>
+
+  <!-- KPI Count Cards -->
+  <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-space-around oj-sm-margin-4x-top">
+    <div class="oj-flex-item oj-sm-margin-2x">
+      <oj-card>
+        <div class="oj-typography-subheading-sm">Customers</div>
+        <div class="oj-typography-heading-xl" data-bind="text: totalCustomers"></div>
+      </oj-card>
+    </div>
+    <div class="oj-flex-item oj-sm-margin-2x">
+      <oj-card>
+        <div class="oj-typography-subheading-sm">Orders</div>
+        <div class="oj-typography-heading-xl" data-bind="text: totalOrders"></div>
+      </oj-card>
+    </div>
+    <div class="oj-flex-item oj-sm-margin-2x">
+      <oj-card>
+        <div class="oj-typography-subheading-sm">Revenue</div>
+        <div class="oj-typography-heading-xl" data-bind="text: totalRevenue"></div>
+      </oj-card>
+    </div>
+    <div class="oj-flex-item oj-sm-margin-2x">
+      <oj-card>
+        <div class="oj-typography-subheading-sm">Support Tickets</div>
+        <div class="oj-typography-heading-xl" data-bind="text: totalTickets"></div>
+      </oj-card>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="oj-sm-margin-4x-top">
+    <oj-table
+      aria-label="Sample Table"
+      data="[[dataProvider]]"
+      columns='[
+        {"headerText": "ID", "field": "id"},
+        {"headerText": "Name", "field": "name"},
+        {"headerText": "Status", "field": "status"},
+        {"headerText": "Amount", "field": "amount"}
+      ]'
+      display="grid"
+      style="width:100%; max-width:900px;">
+    </oj-table>
+  </div>
+</div>

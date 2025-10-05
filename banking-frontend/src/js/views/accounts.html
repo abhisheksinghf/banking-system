@@ -1,0 +1,54 @@
+<div class="oj-hybrid-padding">
+  <h1>Accounts</h1>
+
+  <div class="oj-flex oj-sm-margin-2x-bottom">
+    <oj-button on-oj-action="[[openDialog]]" chroming="callToAction">Add Account</oj-button>
+    <oj-button on-oj-action="[[loadAccounts]]" chroming="outlined" class="oj-sm-margin-2x-start">Refresh Accounts</oj-button>
+  </div>
+
+  <!-- Accounts Table -->
+  <div class="oj-sm-margin-4x-top">
+    <oj-table aria-label="Accounts Table" data="[[dataProvider]]" columns='[
+      {"headerText": "Account No", "field": "accountNo"},
+      {"headerText": "Account Holder Name", "field": "accountHolderName"},
+      {"headerText": "Balance", "field": "balance"},
+      {"headerText": "Account Type", "field": "accountType"}
+    ]' display="grid" style="width:100%; max-width:1000px;">
+    </oj-table>
+  </div>
+
+  <!-- Add Account Dialog -->
+  <oj-dialog id="addAccountDialog" dialog-title="Add Account" modality="modal">
+    <div slot="body">
+      <oj-form-layout direction="column" max-columns="1" style="width:300px;">
+
+        <!-- Account Holder Dropdown -->
+        <oj-c-select-single label-hint="Account Holder" 
+                            value="{{newAccountHolderId}}" 
+                            data="[[customersDP]]" 
+                            item-text="name" 
+                            item-value="id" 
+                            placeholder="Select Customer">
+        </oj-c-select-single>
+        <!-- Balance -->
+        <oj-input-number label-hint="Balance" value="{{newAccountBalance}}" min="0"></oj-input-number>
+
+
+        <!-- Account Type Dropdown -->
+        <oj-c-select-single label-hint="Account Type" 
+                            value="{{newAccountType}}" 
+                            data="[[accountTypesDP]]" 
+                            item-text="label" 
+                            item-value="value" 
+                            placeholder="Select Type">
+        </oj-c-select-single>
+
+      </oj-form-layout>
+    </div>
+
+    <div slot="footer">
+      <oj-button on-oj-action="[[closeDialog]]">Cancel</oj-button>
+      <oj-button on-oj-action="[[saveAccount]]" chroming="callToAction">Save</oj-button>
+    </div>
+  </oj-dialog>
+</div>

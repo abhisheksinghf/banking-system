@@ -1,0 +1,21 @@
+# Global ignores
+.DS_Store
+*.log
+node_modules/
+dist/
+target/
+.idea/
+.vscode/
+.env
+*.iml
+
+# Maven
+**/target/
+**/.mvn/
+**/logs/
+
+# OJET
+**/node_modules/
+**/web/js/libs/
+**/build/
+**/dist/
