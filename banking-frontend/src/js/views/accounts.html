@@ -1,54 +1,120 @@
 <div class="oj-hybrid-padding">
-  <h1>Accounts</h1>
-
-  <div class="oj-flex oj-sm-margin-2x-bottom">
-    <oj-button on-oj-action="[[openDialog]]" chroming="callToAction">Add Account</oj-button>
-    <oj-button on-oj-action="[[loadAccounts]]" chroming="outlined" class="oj-sm-margin-2x-start">Refresh Accounts</oj-button>
+  <!-- Page Title -->
+  <h1 class="oj-typography-heading-lg oj-sm-margin-2x-bottom">Account Management</h1>
+  
+  <!-- Action Toolbar -->
+  <div class="oj-flex oj-sm-margin-4x-bottom oj-sm-align-items-center">
+    <!-- Search Section -->
+    <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
+      <oj-input-text placeholder="Search by Account No"
+                     value="{{searchAccountNo}}"
+                     style="max-width:250px;">
+      </oj-input-text>
+    </div>
+    <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
+      <oj-button on-oj-action="[[searchAccount]]" chroming="solid">
+        <span slot="startIcon" class="oj-ux-ico-search"></span>
+        Search
+      </oj-button>
+    </div>
+    <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
+      <oj-button on-oj-action="[[loadAccounts]]" chroming="outlined">
+        Reset
+      </oj-button>
+    </div>
+    <!-- Spacer -->
+    <div class="oj-flex-item oj-sm-flex-grow"></div>
+    <!-- Add Account Button -->
+    <div class="oj-flex-item oj-sm-flex-initial">
+      <oj-button on-oj-action="[[openAddDialog]]" chroming="callToAction">
+        <span slot="startIcon" class="oj-ux-ico-add-circle"></span>
+        Add Account
+      </oj-button>
+    </div>
   </div>
-
-  <!-- Accounts Table -->
-  <div class="oj-sm-margin-4x-top">
-    <oj-table aria-label="Accounts Table" data="[[dataProvider]]" columns='[
-      {"headerText": "Account No", "field": "accountNo"},
-      {"headerText": "Account Holder Name", "field": "accountHolderName"},
-      {"headerText": "Balance", "field": "balance"},
-      {"headerText": "Account Type", "field": "accountType"}
-    ]' display="grid" style="width:100%; max-width:1000px;">
+  
+  <!-- Accounts Table Section -->
+  <oj-card class="oj-sm-padding-4x oj-sm-margin-2x-top">
+    <h2 class="oj-typography-heading-sm oj-sm-margin-2x-bottom">Account List</h2>
+    <oj-table
+      aria-label="Accounts Table"
+      data="[[dataProvider]]"
+      columns='[
+        {"headerText": "Account No", "field": "accountNo"},
+        {"headerText": "Account Holder Name", "field": "accountHolderName"},
+        {"headerText": "Balance", "field": "balance"},
+        {"headerText": "Account Type", "field": "accountType"},
+        {"headerText": "Actions", "field": "actions", "template": "actionTemplate"}
+      ]'
+      display="grid"
+      style="width:100%; max-width:1200px; background:white;">
+      <template slot="actionTemplate" data-oj-as="cell">
+        <oj-button on-oj-action="[[openEditDialog.bind($data, cell.row)]]" 
+                   chroming="borderless"
+                   display="icons">
+          <span slot="startIcon" class="oj-ux-ico-edit"></span>
+        </oj-button>
+      </template>
     </oj-table>
-  </div>
-
+  </oj-card>
+  
   <!-- Add Account Dialog -->
   <oj-dialog id="addAccountDialog" dialog-title="Add Account" modality="modal">
-    <div slot="body">
-      <oj-form-layout direction="column" max-columns="1" style="width:300px;">
-
+    <div slot="body" style="padding:16px;">
+      <oj-form-layout direction="column" max-columns="1" style="width:100%; max-width:400px;">
         <!-- Account Holder Dropdown -->
-        <oj-c-select-single label-hint="Account Holder" 
-                            value="{{newAccountHolderId}}" 
-                            data="[[customersDP]]" 
-                            item-text="name" 
-                            item-value="id" 
+        <oj-c-select-single label-hint="Account Holder"
+                            value="{{newAccountHolderId}}"
+                            data="[[customersDP]]"
+                            item-text="name"
+                            item-value="id"
                             placeholder="Select Customer">
         </oj-c-select-single>
         <!-- Balance -->
         <oj-input-number label-hint="Balance" value="{{newAccountBalance}}" min="0"></oj-input-number>
-
-
         <!-- Account Type Dropdown -->
-        <oj-c-select-single label-hint="Account Type" 
-                            value="{{newAccountType}}" 
-                            data="[[accountTypesDP]]" 
-                            item-text="label" 
-                            item-value="value" 
+        <oj-c-select-single label-hint="Account Type"
+                            value="{{newAccountType}}"
+                            data="[[accountTypesDP]]"
+                            item-text="label"
+                            item-value="value"
                             placeholder="Select Type">
         </oj-c-select-single>
-
       </oj-form-layout>
     </div>
+    <div slot="footer" class="oj-sm-padding-2x oj-flex oj-sm-justify-content-flex-end">
+      <oj-button on-oj-action="[[closeAddDialog]]" chroming="outlined" class="oj-sm-margin-2x-end">
+        Cancel
+      </oj-button>
+      <oj-button on-oj-action="[[saveAccount]]" chroming="callToAction">
+        Save
+      </oj-button>
+    </div>
+  </oj-dialog>
 
-    <div slot="footer">
-      <oj-button on-oj-action="[[closeDialog]]">Cancel</oj-button>
-      <oj-button on-oj-action="[[saveAccount]]" chroming="callToAction">Save</oj-button>
+  <!-- Edit Account Dialog -->
+  <oj-dialog id="editAccountDialog" dialog-title="Edit Account" modality="modal">
+    <div slot="body" style="padding:16px;">
+      <oj-form-layout direction="column" max-columns="1" style="width:100%; max-width:400px;">
+        <oj-input-number label-hint="Account No" value="{{editAccountNo}}" readonly="true"></oj-input-number>
+        <oj-input-text readonly="true" label-hint="Account Holder Name" value="{{editAccountHolderName}}"></oj-input-text>
+        <oj-input-number label-hint="Balance" value="{{editAccountBalance}}" min="0"></oj-input-number>
+        <!-- Account Type Dropdown -->
+        <oj-c-select-single label-hint="Account Type"
+                            value="{{editAccountType}}"
+                            data="[[accountTypesDP]]"
+                            item-text="label"
+                            item-value="value">
+        </oj-c-select-single>
+      </oj-form-layout>
+    </div>
+    <div slot="footer" class="oj-sm-padding-2x oj-flex oj-sm-justify-content-flex-end">
+      <oj-button on-oj-action="[[closeEditDialog]]" chroming="outlined" class="oj-sm-margin-2x-end">
+        Cancel
+      </oj-button>
+      <oj-button on-oj-action="[[updateAccount]]" chroming="callToAction">
+        Update
+      </oj-button>
     </div>
   </oj-dialog>
 </div>

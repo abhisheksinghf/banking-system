@@ -1,48 +1,48 @@
 <!-- Dashboard Content -->
 <div class="oj-hybrid-padding">
-  <h1>Dashboard</h1>
-
+  <h1 class="oj-typography-heading-lg oj-sm-margin-4x-bottom">Dashboard</h1>
+  
   <!-- KPI Count Cards -->
-  <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-space-around oj-sm-margin-4x-top">
-    <div class="oj-flex-item oj-sm-margin-2x">
-      <oj-card>
-        <div class="oj-typography-subheading-sm">Customers</div>
-        <div class="oj-typography-heading-xl" data-bind="text: totalCustomers"></div>
-      </oj-card>
+  <div class="oj-flex oj-sm-flex-wrap oj-sm-justify-content-space-around oj-sm-margin-4x-top">
+    <!-- Total Customers Card -->
+    <div class="oj-flex-item oj-sm-margin-2x" style="min-width: 200px; padding: 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <div class="oj-typography-body-sm oj-sm-margin-2x-bottom" style="color: #666;">Total Customers</div>
+      <div class="oj-typography-heading-xl" style="color: #1976d2; font-weight: bold;" data-bind="text: totalCustomers"></div>
     </div>
-    <div class="oj-flex-item oj-sm-margin-2x">
-      <oj-card>
-        <div class="oj-typography-subheading-sm">Orders</div>
-        <div class="oj-typography-heading-xl" data-bind="text: totalOrders"></div>
-      </oj-card>
+    
+    <!-- Total Accounts Card -->
+    <div class="oj-flex-item oj-sm-margin-2x" style="min-width: 200px; padding: 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <div class="oj-typography-body-sm oj-sm-margin-2x-bottom" style="color: #666;">Total Accounts</div>
+      <div class="oj-typography-heading-xl" style="color: #388e3c; font-weight: bold;" data-bind="text: totalAccounts"></div>
     </div>
-    <div class="oj-flex-item oj-sm-margin-2x">
-      <oj-card>
-        <div class="oj-typography-subheading-sm">Revenue</div>
-        <div class="oj-typography-heading-xl" data-bind="text: totalRevenue"></div>
-      </oj-card>
+    
+    <!-- Total Balance Card -->
+    <div class="oj-flex-item oj-sm-margin-2x" style="min-width: 200px; padding: 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <div class="oj-typography-body-sm oj-sm-margin-2x-bottom" style="color: #666;">Total Balance</div>
+      <div class="oj-typography-heading-xl" style="color: #f57c00; font-weight: bold;" data-bind="text: totalBalance"></div>
     </div>
-    <div class="oj-flex-item oj-sm-margin-2x">
-      <oj-card>
-        <div class="oj-typography-subheading-sm">Support Tickets</div>
-        <div class="oj-typography-heading-xl" data-bind="text: totalTickets"></div>
-      </oj-card>
+    
+    <!-- Average Balance Card -->
+    <div class="oj-flex-item oj-sm-margin-2x" style="min-width: 200px; padding: 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <div class="oj-typography-body-sm oj-sm-margin-2x-bottom" style="color: #666;">Avg. Balance</div>
+      <div class="oj-typography-heading-xl" style="color: #7b1fa2; font-weight: bold;" data-bind="text: avgBalance"></div>
     </div>
   </div>
 
-  <!-- Table -->
-  <div class="oj-sm-margin-4x-top">
+  <!-- Recent Accounts Table -->
+  <div class="oj-sm-margin-6x-top" style="padding: 24px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h2 class="oj-typography-heading-sm oj-sm-margin-4x-bottom">Recent Accounts</h2>
     <oj-table
-      aria-label="Sample Table"
+      aria-label="Recent Accounts Table"
       data="[[dataProvider]]"
       columns='[
-        {"headerText": "ID", "field": "id"},
-        {"headerText": "Name", "field": "name"},
-        {"headerText": "Status", "field": "status"},
-        {"headerText": "Amount", "field": "amount"}
+        {"headerText": "Account No", "field": "accountNo"},
+        {"headerText": "Account Holder", "field": "accountHolderName"},
+        {"headerText": "Type", "field": "accountType"},
+        {"headerText": "Balance", "field": "balance"}
       ]'
       display="grid"
-      style="width:100%; max-width:900px;">
+      style="width:100%; max-width:1000px;">
     </oj-table>
   </div>
 </div>
