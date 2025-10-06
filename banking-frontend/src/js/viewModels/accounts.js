@@ -41,18 +41,17 @@ define([
     self.editAccountBalance = ko.observable();
     self.editAccountType = ko.observable();
     
-    // Delete confirmation fields
-    self.deleteAccountNo = ko.observable();
-    self.deleteAccountHolderName = ko.observable();
-    self.deleteAccountBalance = ko.observable();
-    
     // Search field
     self.searchAccountNo = ko.observable("");
     
     // Load all accounts
     self.loadAccounts = () => {
+      console.log("Loading all accounts...");
       accountService.listAccounts()
-        .then(data => self.accounts(data))
+        .then(data => {
+          console.log("Accounts loaded:", data);
+          self.accounts(data);
+        })
         .catch(err => {
           console.error("Error fetching accounts:", err);
           self.accounts([]);
@@ -62,6 +61,8 @@ define([
     // Search account by Account No
     self.searchAccount = () => {
       const accountNo = self.searchAccountNo();
+      console.log("Searching for account:", accountNo);
+      
       if (!accountNo) {
         self.loadAccounts();
         return;
@@ -69,6 +70,7 @@ define([
       
       accountService.getAccount(accountNo)
         .then(account => {
+          console.log("Account found:", account);
           self.accounts([account]);
         })
         .catch(err => {
@@ -80,8 +82,10 @@ define([
     
     // Load customers for dropdown
     self.loadCustomers = () => {
+      console.log("Loading customers...");
       customerService.listCustomers()
         .then(data => {
+          console.log("Customers loaded:", data);
           self.customers(data);
         })
         .catch(err => {
@@ -92,6 +96,7 @@ define([
     
     // Add Dialog handling
     self.openAddDialog = () => {
+      console.log("Opening Add Account dialog");
       self.loadCustomers();
       // Reset form fields
       self.newAccountHolderId(null);
@@ -101,12 +106,16 @@ define([
     };
     
     self.closeAddDialog = () => {
+      console.log("Closing Add Account dialog");
       document.getElementById('addAccountDialog').close();
     };
     
     // Save new account
     self.saveAccount = () => {
+      console.log("Saving new account...");
+      
       if (!self.newAccountHolderId() || !self.newAccountBalance() || !self.newAccountType()) {
+        console.log("Validation failed: All fields are required");
         alert("All fields are required!");
         return;
       }
@@ -118,8 +127,11 @@ define([
         accountType: self.newAccountType()
       };
       
+      console.log("Creating account:", newAcc);
+      
       accountService.createAccount(newAcc)
         .then(data => {
+          console.log("Account created successfully:", data);
           self.accounts.push(data);
           self.closeAddDialog();
           alert("Account added successfully!");
@@ -132,6 +144,8 @@ define([
     
     // Edit Dialog handling
     self.openEditDialog = (accountData) => {
+      console.log("Opening Edit dialog for account:", accountData);
+      
       // Populate form fields with existing account data
       self.editAccountNo(accountData.accountNo);
       self.editAccountHolderName(accountData.accountHolderName);
@@ -142,6 +156,7 @@ define([
     };
     
     self.closeEditDialog = () => {
+      console.log("Closing Edit Account dialog");
       document.getElementById("editAccountDialog").close();
     };
     
@@ -155,8 +170,12 @@ define([
         accountType: self.editAccountType()
       };
       
+      console.log("Updating account:", updatedAccount);
+      
       accountService.updateAccount(accountNo, updatedAccount)
         .then(updatedData => {
+          console.log("Account updated successfully:", updatedData);
+          
           // Update the account in the array
           const accounts = self.accounts();
           const index = accounts.findIndex(acc => acc.accountNo === accountNo);
@@ -173,42 +192,40 @@ define([
         });
     };
     
-    // Delete Dialog handling
-    self.confirmDelete = (accountData) => {
-      // Populate confirmation dialog with account data
-      self.deleteAccountNo(accountData.accountNo);
-      self.deleteAccountHolderName(accountData.accountHolderName);
-      self.deleteAccountBalance(accountData.balance);
-      
-      document.getElementById("deleteConfirmDialog").open();
-    };
+    // Delete account with simple confirm
+// Delete account with simple confirm
+self.confirmDelete = (accountData) => {
+  console.log("Delete requested for account:", accountData);
+  
+  const confirmMsg = `Are you sure you want to delete account ${accountData.accountNo} (${accountData.accountHolderName})?`;
+  
+  if (confirm(confirmMsg)) {
+    console.log("User confirmed delete");
+    const accountNo = accountData.accountNo;
     
-    self.closeDeleteDialog = () => {
-      document.getElementById("deleteConfirmDialog").close();
-    };
-    
-    // Delete account via API
-    self.deleteAccount = () => {
-      const accountNo = self.deleteAccountNo();
-      
-      accountService.deleteAccount(accountNo)
-        .then(() => {
-          // Remove account from the array
-          const accounts = self.accounts();
-          const filteredAccounts = accounts.filter(acc => acc.accountNo !== accountNo);
-          self.accounts(filteredAccounts);
-          
-          self.closeDeleteDialog();
-          alert("Account deleted successfully!");
-        })
-        .catch(err => {
-          console.error("Error deleting account:", err);
-          alert("Failed to delete account. Please try again.");
+    accountService.deleteAccount(accountNo)
+      .then(() => {
+        console.log("Account deleted successfully:", accountNo);
+        
+        // Remove using Knockout's remove method
+        self.accounts.remove(function(item) {
+          return item.accountNo === accountNo;
         });
-    };
+        
+        alert("Account deleted successfully!");
+      })
+      .catch(err => {
+        console.error("Error deleting account:", err);
+        alert("Failed to delete account. Please try again.");
+      });
+  } else {
+    console.log("Delete cancelled by user");
+  }
+};
     
     // Lifecycle
     self.connected = () => {
+      console.log("AccountsViewModel connected");
       self.loadAccounts();
     };
   }
