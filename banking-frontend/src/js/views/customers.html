@@ -1,41 +1,50 @@
 <div class="oj-hybrid-padding">
-  <!-- Page Title -->
-  <h1 class="oj-typography-heading-lg oj-sm-margin-2x-bottom">Customer Management</h1>
-  
-  <!-- Action Toolbar -->
-  <div class="oj-flex oj-sm-margin-4x-bottom oj-sm-align-items-center">
-    <!-- Search Section -->
-    <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
-      <oj-input-text placeholder="Search by Customer ID"
-                     value="{{searchCustomerId}}"
-                     style="max-width:250px;">
-      </oj-input-text>
-    </div>
-    <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
-      <oj-button on-oj-action="[[searchCustomer]]" chroming="solid">
-        <span slot="startIcon" class="oj-ux-ico-search"></span>
-        Search
-      </oj-button>
-    </div>
-    <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
-      <oj-button on-oj-action="[[loadCustomers]]" chroming="outlined">
-        Reset
-      </oj-button>
-    </div>
-    <!-- Spacer -->
-    <div class="oj-flex-item oj-sm-flex-grow"></div>
-    <!-- Add Customer Button -->
-    <div class="oj-flex-item oj-sm-flex-initial">
-      <oj-button on-oj-action="[[openAddDialog]]" chroming="callToAction">
-        <span slot="startIcon" class="oj-ux-ico-add-circle"></span>
-        Add Customer
-      </oj-button>
+  <!-- Header Section -->
+  <div class="oj-flex oj-sm-align-items-center oj-sm-justify-content-space-between oj-sm-padding-4x oj-sm-margin-4x-bottom" 
+       style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);">
+    <div>
+      <h1 class="oj-typography-heading-lg" style="color: white; margin: 0;">Customer Management</h1>
+      <p style="color: rgba(255,255,255,0.9); margin-top: 8px; font-size: 14px;">Manage your customer database</p>
     </div>
   </div>
   
+  <!-- Action Toolbar -->
+  <oj-card class="oj-sm-padding-4x oj-sm-margin-4x-bottom" style="border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+    <div class="oj-flex oj-sm-align-items-center oj-sm-flex-wrap">
+      <!-- Search Section -->
+      <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
+        <oj-input-text placeholder="Search by Customer ID"
+                       value="{{searchCustomerId}}"
+                       style="max-width:280px;">
+          <span slot="start" class="oj-ux-ico-search" style="color: #9ca3af;"></span>
+        </oj-input-text>
+      </div>
+      <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
+        <oj-button on-oj-action="[[searchCustomer]]" chroming="solid">
+          Search
+        </oj-button>
+      </div>
+      <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
+        <oj-button on-oj-action="[[loadCustomers]]" chroming="outlined">
+          <span slot="startIcon" class="oj-ux-ico-refresh"></span>
+          Reset
+        </oj-button>
+      </div>
+      <!-- Spacer -->
+      <div class="oj-flex-item oj-sm-flex-grow"></div>
+      <!-- Add Customer Button -->
+      <div class="oj-flex-item oj-sm-flex-initial">
+        <oj-button on-oj-action="[[openAddDialog]]" chroming="callToAction">
+          <span slot="startIcon" class="oj-ux-ico-add-circle"></span>
+          Add Customer
+        </oj-button>
+      </div>
+    </div>
+  </oj-card>
+  
   <!-- Customers Table Section -->
-  <oj-card class="oj-sm-padding-4x oj-sm-margin-2x-top">
-    <h2 class="oj-typography-heading-sm oj-sm-margin-2x-bottom">Customer List</h2>
+  <oj-card class="oj-sm-padding-4x oj-sm-margin-2x-top" style="border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+    <h2 class="oj-typography-heading-sm oj-sm-margin-3x-bottom" style="color: #111827;">Customer List</h2>
     <oj-table
       aria-label="Customers Table"
       data="[[dataProvider]]"
@@ -48,11 +57,12 @@
         {"headerText": "Actions", "field": "actions", "template": "actionTemplate"}
       ]'
       display="grid"
-      style="width:100%; max-width:1200px; background:white;">
+      style="width:100%; max-width:1200px; border-radius: 8px; overflow: hidden;">
       <template slot="actionTemplate" data-oj-as="cell">
         <oj-button on-oj-action="[[openEditDialog.bind($data, cell.row)]]" 
                    chroming="borderless"
-                   display="icons">
+                   display="icons"
+                   title="Edit Customer">
           <span slot="startIcon" class="oj-ux-ico-edit"></span>
         </oj-button>
       </template>
@@ -61,16 +71,24 @@
   
   <!-- Add Customer Dialog -->
   <oj-dialog id="addCustomerDialog" dialog-title="Add Customer" modality="modal">
-    <div slot="body" style="padding:16px;">
-      <oj-form-layout direction="column" max-columns="1" style="width:100%; max-width:400px;">
-        <oj-input-text label-hint="Full Name" value="{{newCustomerName}}"></oj-input-text>
-        <oj-input-text label-hint="Email Address" value="{{newCustomerEmail}}"></oj-input-text>
-        <oj-input-text label-hint="Mobile Number" value="{{newCustomerMobile}}"></oj-input-text>
-        <oj-input-text label-hint="Address" value="{{newCustomerAddress}}"></oj-input-text>
+    <div slot="body" style="padding:24px;">
+      <oj-form-layout direction="column" max-columns="1" style="width:100%; max-width:450px;">
+        <oj-input-text label-hint="Full Name" value="{{newCustomerName}}" placeholder="Enter customer name">
+          <span slot="start" class="oj-ux-ico-user-profile" style="color: #9ca3af;"></span>
+        </oj-input-text>
+        <oj-input-text label-hint="Email Address" value="{{newCustomerEmail}}" placeholder="email@example.com">
+          <span slot="start" class="oj-ux-ico-email" style="color: #9ca3af;"></span>
+        </oj-input-text>
+        <oj-input-text label-hint="Mobile Number" value="{{newCustomerMobile}}" placeholder="Enter mobile number">
+          <span slot="start" class="oj-ux-ico-phone" style="color: #9ca3af;"></span>
+        </oj-input-text>
+        <oj-input-text label-hint="Address" value="{{newCustomerAddress}}" placeholder="Enter address">
+          <span slot="start" class="oj-ux-ico-location" style="color: #9ca3af;"></span>
+        </oj-input-text>
       </oj-form-layout>
     </div>
-    <div slot="footer" class="oj-sm-padding-2x oj-flex oj-sm-justify-content-flex-end">
-      <oj-button on-oj-action="[[closeAddDialog]]" chroming="outlined" class="oj-sm-margin-2x-end">
+    <div slot="footer" class="oj-sm-padding-3x oj-flex oj-sm-justify-content-flex-end" style="background: #f9fafb; gap: 12px;">
+      <oj-button on-oj-action="[[closeAddDialog]]" chroming="outlined">
         Cancel
       </oj-button>
       <oj-button on-oj-action="[[saveCustomer]]" chroming="callToAction">
@@ -81,17 +99,25 @@
 
   <!-- Edit Customer Dialog -->
   <oj-dialog id="editCustomerDialog" dialog-title="Edit Customer" modality="modal">
-    <div slot="body" style="padding:16px;">
-      <oj-form-layout direction="column" max-columns="1" style="width:100%; max-width:400px;">
+    <div slot="body" style="padding:24px;">
+      <oj-form-layout direction="column" max-columns="1" style="width:100%; max-width:450px;">
         <oj-input-text label-hint="Customer ID" value="{{editCustomerId}}" readonly="true"></oj-input-text>
-        <oj-input-text label-hint="Full Name" value="{{editCustomerName}}"></oj-input-text>
-        <oj-input-text label-hint="Email Address" value="{{editCustomerEmail}}"></oj-input-text>
-        <oj-input-text label-hint="Mobile Number" value="{{editCustomerMobile}}"></oj-input-text>
-        <oj-input-text label-hint="Address" value="{{editCustomerAddress}}"></oj-input-text>
+        <oj-input-text label-hint="Full Name" value="{{editCustomerName}}" placeholder="Enter customer name">
+          <span slot="start" class="oj-ux-ico-user-profile" style="color: #9ca3af;"></span>
+        </oj-input-text>
+        <oj-input-text label-hint="Email Address" value="{{editCustomerEmail}}" placeholder="email@example.com">
+          <span slot="start" class="oj-ux-ico-email" style="color: #9ca3af;"></span>
+        </oj-input-text>
+        <oj-input-text label-hint="Mobile Number" value="{{editCustomerMobile}}" placeholder="Enter mobile number">
+          <span slot="start" class="oj-ux-ico-phone" style="color: #9ca3af;"></span>
+        </oj-input-text>
+        <oj-input-text label-hint="Address" value="{{editCustomerAddress}}" placeholder="Enter address">
+          <span slot="start" class="oj-ux-ico-location" style="color: #9ca3af;"></span>
+        </oj-input-text>
       </oj-form-layout>
     </div>
-    <div slot="footer" class="oj-sm-padding-2x oj-flex oj-sm-justify-content-flex-end">
-      <oj-button on-oj-action="[[closeEditDialog]]" chroming="outlined" class="oj-sm-margin-2x-end">
+    <div slot="footer" class="oj-sm-padding-3x oj-flex oj-sm-justify-content-flex-end" style="background: #f9fafb; gap: 12px;">
+      <oj-button on-oj-action="[[closeEditDialog]]" chroming="outlined">
         Cancel
       </oj-button>
       <oj-button on-oj-action="[[updateCustomer]]" chroming="callToAction">

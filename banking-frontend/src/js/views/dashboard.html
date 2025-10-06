@@ -1,60 +1,157 @@
-<!-- Dashboard Content -->
-<div class="oj-hybrid-padding">
-  <h1 class="oj-typography-heading-lg oj-sm-margin-4x-bottom">Dashboard</h1>
-  
-  <!-- KPI Count Cards -->
-  <div class="oj-flex oj-sm-flex-wrap oj-sm-justify-content-space-around oj-sm-margin-4x-top">
-    <!-- Total Customers Card -->
-    <div class="oj-flex-item oj-sm-margin-2x" style="min-width: 200px; padding: 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-      <div class="oj-typography-body-sm oj-sm-margin-2x-bottom" style="color: #666;">Total Customers</div>
-      <div class="oj-typography-heading-xl" style="color: #1976d2; font-weight: bold;" data-bind="text: totalCustomers"></div>
+<!-- Premium Dashboard Content -->
+<div class="oj-hybrid-padding" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh;">
+  <div style="max-width: 1400px; margin: 0 auto;">
+    <!-- Header Section -->
+    <div class="oj-flex oj-sm-align-items-center oj-sm-justify-content-space-between oj-sm-margin-4x-bottom">
+      <div>
+        <h1 class="oj-typography-heading-xl" style="color: #1a1a2e; font-weight: 700; margin-bottom: 8px;">Dashboard Overview</h1>
+        <p class="oj-typography-body-md" style="color: #666; margin: 0;">Monitor your banking metrics in real-time</p>
+      </div>
+      <div style="padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
+        <span class="oj-typography-body-md">Last Updated: Today</span>
+      </div>
     </div>
-    
-    <!-- Total Accounts Card -->
-    <div class="oj-flex-item oj-sm-margin-2x" style="min-width: 200px; padding: 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-      <div class="oj-typography-body-sm oj-sm-margin-2x-bottom" style="color: #666;">Total Accounts</div>
-      <div class="oj-typography-heading-xl" style="color: #388e3c; font-weight: bold;" data-bind="text: totalAccounts"></div>
+   
+    <!-- KPI Count Cards with Enhanced Design -->
+    <div class="oj-flex oj-sm-flex-wrap oj-sm-justify-content-space-between oj-sm-margin-6x-bottom">
+      <!-- Total Customers Card -->
+      <div class="oj-flex-item oj-sm-margin-2x-bottom" style="flex: 1; min-width: 250px; max-width: calc(25% - 16px); margin: 8px; padding: 28px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); position: relative; overflow: hidden; transition: transform 0.3s ease;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="oj-flex oj-sm-align-items-center oj-sm-justify-content-space-between">
+          <div>
+            <div class="oj-typography-body-sm" style="color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">Total Customers</div>
+            <div class="oj-typography-heading-2xl" style="color: #ffffff; font-weight: 700;" data-bind="text: totalCustomers"></div>
+            <div class="oj-typography-body-sm" style="color: rgba(255,255,255,0.8); margin-top: 8px;">↑ 12.5% from last month</div>
+          </div>
+          <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 32px;">👥</span>
+          </div>
+        </div>
+      </div>
+     
+      <!-- Total Accounts Card -->
+      <div class="oj-flex-item oj-sm-margin-2x-bottom" style="flex: 1; min-width: 250px; max-width: calc(25% - 16px); margin: 8px; padding: 28px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 16px; box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="oj-flex oj-sm-align-items-center oj-sm-justify-content-space-between">
+          <div>
+            <div class="oj-typography-body-sm" style="color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">Total Accounts</div>
+            <div class="oj-typography-heading-2xl" style="color: #ffffff; font-weight: 700;" data-bind="text: totalAccounts"></div>
+            <div class="oj-typography-body-sm" style="color: rgba(255,255,255,0.8); margin-top: 8px;">↑ 8.3% from last month</div>
+          </div>
+          <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 32px;">💼</span>
+          </div>
+        </div>
+      </div>
+     
+      <!-- Total Balance Card -->
+      <div class="oj-flex-item oj-sm-margin-2x-bottom" style="flex: 1; min-width: 250px; max-width: calc(25% - 16px); margin: 8px; padding: 28px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 16px; box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="oj-flex oj-sm-align-items-center oj-sm-justify-content-space-between">
+          <div>
+            <div class="oj-typography-body-sm" style="color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">Total Balance</div>
+            <div class="oj-typography-heading-2xl" style="color: #ffffff; font-weight: 700;" data-bind="text: totalBalance"></div>
+            <div class="oj-typography-body-sm" style="color: rgba(255,255,255,0.8); margin-top: 8px;">↑ 15.7% from last month</div>
+          </div>
+          <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 32px;">💰</span>
+          </div>
+        </div>
+      </div>
+     
+      <!-- Average Balance Card -->
+      <div class="oj-flex-item oj-sm-margin-2x-bottom" style="flex: 1; min-width: 250px; max-width: calc(25% - 16px); margin: 8px; padding: 28px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 16px; box-shadow: 0 10px 30px rgba(67, 233, 123, 0.3); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="oj-flex oj-sm-align-items-center oj-sm-justify-content-space-between">
+          <div>
+            <div class="oj-typography-body-sm" style="color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">Avg. Balance</div>
+            <div class="oj-typography-heading-2xl" style="color: #ffffff; font-weight: 700;" data-bind="text: avgBalance"></div>
+            <div class="oj-typography-body-sm" style="color: rgba(255,255,255,0.8); margin-top: 8px;">↑ 6.2% from last month</div>
+          </div>
+          <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 32px;">📊</span>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <!-- Total Balance Card -->
-    <div class="oj-flex-item oj-sm-margin-2x" style="min-width: 200px; padding: 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-      <div class="oj-typography-body-sm oj-sm-margin-2x-bottom" style="color: #666;">Total Balance</div>
-      <div class="oj-typography-heading-xl" style="color: #f57c00; font-weight: bold;" data-bind="text: totalBalance"></div>
-    </div>
-    
-    <!-- Average Balance Card -->
-    <div class="oj-flex-item oj-sm-margin-2x" style="min-width: 200px; padding: 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-      <div class="oj-typography-body-sm oj-sm-margin-2x-bottom" style="color: #666;">Avg. Balance</div>
-      <div class="oj-typography-heading-xl" style="color: #7b1fa2; font-weight: bold;" data-bind="text: avgBalance"></div>
-    </div>
-  </div>
 
-  <!-- Recent Accounts Table -->
-  <div class="oj-sm-margin-6x-top" style="padding: 24px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <h2 class="oj-typography-heading-sm oj-sm-margin-4x-bottom">Recent Accounts</h2>
-    <oj-table
-      aria-label="Recent Accounts Table"
-      data="[[dataProvider]]"
-      columns='[
-        {"headerText": "Account No", "field": "accountNo"},
-        {"headerText": "Account Holder", "field": "accountHolderName"},
-        {"headerText": "Type", "field": "accountType"},
-        {"headerText": "Balance", "field": "balance"}
-      ]'
-      display="grid"
-      style="width:100%; max-width:1000px;">
-    </oj-table>
-  </div>
-
-  <!-- Account Type Distribution Chart -->
-  <div class="oj-sm-margin-6x-top" style="padding: 24px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <h2 class="oj-typography-heading-sm oj-sm-margin-4x-bottom">Account Type Distribution</h2>
-    <oj-chart
-      id="pieChart"
-      type="pie"
-      data="[[pieSeriesValue]]"
-      groups="[[pieGroupsValue]]"
-      style="max-width:500px; height:400px; margin: 0 auto;">
-    </oj-chart>
+    <!-- Main Content Grid -->
+    <div class="oj-flex oj-sm-flex-wrap" style="gap: 24px;">
+      <!-- Recent Accounts Table - Left Side -->
+      <div class="oj-flex-item" style="flex: 2; min-width: 600px; padding: 32px; background: #ffffff; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.18);">
+        <div class="oj-flex oj-sm-align-items-center oj-sm-justify-content-space-between oj-sm-margin-4x-bottom">
+          <div>
+            <h2 class="oj-typography-heading-md" style="color: #1a1a2e; font-weight: 700; margin-bottom: 4px;">Recent Accounts</h2>
+            <p class="oj-typography-body-sm" style="color: #666; margin: 0;">Latest account activities</p>
+          </div>
+          <div style="padding: 8px 16px; background: #f5f7fa; border-radius: 8px; color: #667eea; font-weight: 600; cursor: pointer;">
+            <span class="oj-typography-body-sm">View All</span>
+          </div>
+        </div>
+        <oj-table
+          aria-label="Recent Accounts Table"
+          data="[[dataProvider]]"
+          columns='[
+            {"headerText": "Account No", "field": "accountNo", "headerStyle": "font-weight: 700; color: #1a1a2e; background: #f8f9fa; padding: 16px;", "style": "padding: 16px; color: #333;"},
+            {"headerText": "Account Holder", "field": "accountHolderName", "headerStyle": "font-weight: 700; color: #1a1a2e; background: #f8f9fa; padding: 16px;", "style": "padding: 16px; color: #333;"},
+            {"headerText": "Type", "field": "accountType", "headerStyle": "font-weight: 700; color: #1a1a2e; background: #f8f9fa; padding: 16px;", "style": "padding: 16px;"},
+            {"headerText": "Balance", "field": "balance", "headerStyle": "font-weight: 700; color: #1a1a2e; background: #f8f9fa; padding: 16px;", "style": "padding: 16px; color: #667eea; font-weight: 600;"}
+          ]'
+          display="grid"
+          style="width:100%; border-radius: 12px; overflow: hidden;">
+        </oj-table>
+      </div>
+      
+      <!-- Account Type Distribution Chart - Right Side -->
+      <div class="oj-flex-item" style="flex: 1; min-width: 400px; padding: 32px; background: #ffffff; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.18);">
+        <div class="oj-sm-margin-4x-bottom">
+          <h2 class="oj-typography-heading-md" style="color: #1a1a2e; font-weight: 700; margin-bottom: 4px;">Account Distribution</h2>
+          <p class="oj-typography-body-sm" style="color: #666; margin: 0;">Breakdown by account type</p>
+        </div>
+        <oj-chart
+          id="pieChart"
+          type="pie"
+          data="[[pieSeriesValue]]"
+          groups="[[pieGroupsValue]]"
+          style="width:100%; height:380px;"
+          style-defaults='{"pieInnerRadius": 0.6, "dataLabelPosition": "outsideSlice"}'
+          animation-on-display="auto"
+          animation-on-data-change="auto">
+        </oj-chart>
+        <div class="oj-flex oj-sm-justify-content-space-around oj-sm-margin-6x-top" style="padding-top: 24px; border-top: 2px solid #f5f7fa;">
+          <div style="text-align: center;">
+            <div class="oj-typography-body-xs" style="color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Active</div>
+            <div class="oj-typography-heading-sm" style="color: #667eea; font-weight: 700;">89%</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="oj-typography-body-xs" style="color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Growth</div>
+            <div class="oj-typography-heading-sm" style="color: #43e97b; font-weight: 700;">+12%</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="oj-typography-body-xs" style="color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Trend</div>
+            <div class="oj-typography-heading-sm" style="color: #f5576c; font-weight: 700;">↑ Up</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<style>
+  /* Hover effects for cards */
+  .oj-flex-item:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Table styling enhancements */
+  oj-table {
+    --oj-table-border-color: transparent;
+    --oj-table-row-hover-bg-color: #f8f9fa;
+  }
+  
+  /* Smooth animations */
+  * {
+    transition: all 0.3s ease;
+  }
+</style>
