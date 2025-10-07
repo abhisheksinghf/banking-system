@@ -4,22 +4,21 @@ define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
  function(accUtils, ko, ArrayDataProvider, dashboardService) {
     function DashboardViewModel() {
       let self = this;
-      
+     
       // KPI observables
       self.totalCustomers = ko.observable(0);
       self.totalAccounts = ko.observable(0);
       self.totalBalance = ko.observable("$0.00");
       self.avgBalance = ko.observable("$0.00");
-      
+     
       // Recent accounts table
       self.recentAccounts = ko.observableArray([]);
       self.dataProvider = new ArrayDataProvider(self.recentAccounts, { keyAttributes: 'accountNo' });
-      
-      // Pie chart data
-      self.accountTypeData = ko.observableArray([]);
+     
+      // Pie chart data - each account type is a separate series
       self.pieSeriesValue = ko.observableArray([]);
-      self.pieGroupsValue = ko.observableArray([]);
-      
+      self.pieGroupsValue = ko.observableArray(['Account Types']); // Single group for pie chart
+     
       /**
        * Load all dashboard data
        */
@@ -31,19 +30,24 @@ define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
             self.totalBalance(data.totalBalance);
             self.avgBalance(data.avgBalance);
             self.recentAccounts(data.recentAccounts);
-            
-            // Update pie chart data
-            self.accountTypeData(data.accountTypeData);
+           
+            // Format pie chart data - each account type becomes a series
             console.log("Account Type Data:", data.accountTypeData);
-            // Format data for oj-chart
-            const series = [{
-              name: "Account Types",
-              items: data.accountTypeData.map(item => item.value)
-            }];
-            const groups = data.accountTypeData.map(item => item.name);
             
-            self.pieSeriesValue(series);
-            self.pieGroupsValue(groups);
+            if (data.accountTypeData && data.accountTypeData.length > 0) {
+              // Each account type is a separate series with one item
+              const series = data.accountTypeData.map(item => ({
+                name: item.name,
+                items: [item.value]
+              }));
+              
+              self.pieSeriesValue(series);
+              
+              console.log("Pie Series:", self.pieSeriesValue());
+              console.log("Pie Groups:", self.pieGroupsValue());
+            } else {
+              self.pieSeriesValue([]);
+            }
           })
           .catch(err => {
             console.error("Error loading dashboard data:", err);
@@ -53,28 +57,26 @@ define(['../accUtils', 'knockout', 'ojs/ojarraydataprovider',
             self.totalBalance("$0.00");
             self.avgBalance("$0.00");
             self.recentAccounts([]);
-            self.accountTypeData([]);
             self.pieSeriesValue([]);
-            self.pieGroupsValue([]);
           });
       };
-      
+     
       // Lifecycle hooks
       this.connected = () => {
         accUtils.announce('Dashboard page loaded.', 'assertive');
         document.title = "Dashboard";
         self.loadDashboardData();
       };
-      
+     
       this.disconnected = () => {
         // Cleanup if needed
       };
-      
+     
       this.transitionCompleted = () => {
         // Post-transition logic if needed
       };
     }
-    
+   
     return DashboardViewModel;
   }
 );
