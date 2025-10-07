@@ -1,0 +1,61 @@
+<!-- Login View -->
+<div class="oj-hybrid-applayout-page">
+  <div class="oj-flex oj-sm-justify-content-center" style="margin-top: 100px;">
+    <div class="oj-sm-12 oj-md-6 oj-lg-4">
+      <!-- Login Card -->
+      <div class="oj-panel" style="padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        
+        <!-- Logo/Title -->
+        <div class="oj-flex oj-sm-justify-content-center" style="margin-bottom: 30px;">
+          <h1 class="oj-typography-heading-md">Banking System</h1>
+        </div>
+        
+        <div class="oj-flex oj-sm-justify-content-center" style="margin-bottom: 20px;">
+          <span class="oj-typography-body-md oj-text-secondary-color">Sign in to continue</span>
+        </div>
+
+        <!-- Error Messages -->
+        <oj-messages id="loginMessages" 
+                     data="[[messagesDataprovider]]"
+                     display="general"
+                     style="margin-bottom: 20px;">
+        </oj-messages>
+
+        <!-- Login Form -->
+        <oj-form-layout id="loginForm" max-columns="1" direction="column">
+          
+          <!-- Username Field -->
+          <oj-input-text id="username" 
+                         label-hint="Username"
+                         placeholder="Enter username"
+                         value="{{username}}"
+                         on-keypress="[[handleKeyPress]]"
+                         required>
+          </oj-input-text>
+
+          <!-- Password Field -->
+          <oj-input-password id="password"
+                            label-hint="Password"
+                            placeholder="Enter password"
+                            value="{{password}}"
+                            on-keypress="[[handleKeyPress]]"
+                            mask-icon="visible"
+                            required>
+          </oj-input-password>
+
+          <!-- Login Button -->
+          <div style="margin-top: 20px;">
+            <oj-button id="loginButton" 
+                       chroming="callToAction"
+                       on-oj-action="[[handleLogin]]"
+                       disabled="[[isLoggingIn]]"
+                       class="oj-button-full-width">
+              <span data-bind="text: isLoggingIn() ? 'Signing in...' : 'Sign In'"></span>
+            </oj-button>
+          </div>
+
+        </oj-form-layout>
+      </div>
+    </div>
+  </div>
+</div>

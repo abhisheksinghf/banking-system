@@ -1,10 +1,10 @@
 <div class="oj-hybrid-padding">
   <!-- Header Section -->
   <div class="oj-flex oj-sm-align-items-center oj-sm-justify-content-space-between oj-sm-padding-4x oj-sm-margin-4x-bottom" 
-       style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);">
+       style="background-color: #f8f9fa; border: 2px solid #e74c3c; border-radius: 12px;">
     <div>
-      <h1 class="oj-typography-heading-lg" style="color: white; margin: 0;">Account Management</h1>
-      <p style="color: rgba(255,255,255,0.9); margin-top: 8px; font-size: 14px;">Manage your account database</p>
+      <h1 class="oj-typography-heading-lg" style="color: #2c3e50; margin: 0;">Account Management</h1>
+      <p style="color: #7f8c8d; margin-top: 8px; font-size: 14px;">Manage your account database</p>
     </div>
   </div>
   
@@ -16,7 +16,6 @@
         <oj-input-text placeholder="Search by Account No"
                        value="{{searchAccountNo}}"
                        style="max-width:280px;">
-          <span slot="start" class="oj-ux-ico-search" style="color: #9ca3af;"></span>
         </oj-input-text>
       </div>
       <div class="oj-flex-item oj-sm-flex-initial oj-sm-margin-2x-end">
@@ -122,7 +121,6 @@
           <span slot="start" class="oj-ux-ico-user-profile" style="color: #9ca3af;"></span>
         </oj-input-text>
         <oj-input-number label-hint="Balance" value="{{editAccountBalance}}" min="0" placeholder="Enter balance">
-          <span slot="start" class="oj-ux-ico-currency-dollar" style="color: #9ca3af;"></span>
         </oj-input-number>
         <!-- Account Type Dropdown -->
         <oj-c-select-single label-hint="Account Type"
